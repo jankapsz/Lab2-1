@@ -13,7 +13,7 @@ namespace GrafikaSzeminarium
         private static GL Gl;
 
         private static ModelObjectDescriptor cube;
-        private static ModelObjectDescriptor[] cubes = new ModelObjectDescriptor[27];
+        private static ModelObjectDescriptor[] cubes = new ModelObjectDescriptor[26];
 
         private static CameraDescriptor camera = new CameraDescriptor();
 
@@ -151,7 +151,13 @@ namespace GrafikaSzeminarium
                 keyboard.KeyDown += Keyboard_KeyDown;
             }
 
+ ///////////////////////////////////////////////////////////////////////////////////
             cube = ModelObjectDescriptor.CreateCube(Gl);
+
+            for (int i = 0; i < 26; i++)
+            {
+                cubes[i] = ModelObjectDescriptor.CreateCube(Gl);
+            }
 
             Gl.ClearColor(System.Drawing.Color.White);
             
@@ -256,19 +262,17 @@ namespace GrafikaSzeminarium
             SetMatrix(projectionMatrix, ProjectionMatrixVariableName);
 
 
-            var modelMatrixCenterCube = Matrix4X4.CreateScale((float)cubeArrangementModel.CenterCubeScale);
-            SetMatrix(modelMatrixCenterCube, ModelMatrixVariableName);
-            DrawModelObject(cube);
+            //var modelMatrixCenterCube = Matrix4X4.CreateScale((float)cubeArrangementModel.CenterCubeScale);
+            //SetMatrix(modelMatrixCenterCube, ModelMatrixVariableName);
+            //DrawModelObject(cube);
 
-            Matrix4X4<float> diamondScale = Matrix4X4.CreateScale(0.25f);
-            Matrix4X4<float> rotx = Matrix4X4.CreateRotationX((float)Math.PI / 4f);
-            Matrix4X4<float> rotz = Matrix4X4.CreateRotationZ((float)Math.PI / 4f);
-            Matrix4X4<float> roty = Matrix4X4.CreateRotationY((float)cubeArrangementModel.DiamondCubeLocalAngle);
-            Matrix4X4<float> trans = Matrix4X4.CreateTranslation(1f, 1f, 0f);
-            Matrix4X4<float> rotGlobalY = Matrix4X4.CreateRotationY((float)cubeArrangementModel.DiamondCubeGlobalYAngle);
-            Matrix4X4<float> dimondCubeModelMatrix = diamondScale * rotx * rotz * roty * trans * rotGlobalY;
-            SetMatrix(dimondCubeModelMatrix, ModelMatrixVariableName);
-            DrawModelObject(cube);
+            // little cubes drawing
+            for(int i=0; i<26; i++)
+            {
+                var translation = Matrix4X4.CreateTranslation(coords[i][0], coords[i][1], coords[i][2]);
+                SetMatrix(translation, ModelMatrixVariableName);
+                DrawModelObject(cubes[i]);
+            }
 
         }
 
