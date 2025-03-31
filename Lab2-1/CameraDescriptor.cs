@@ -1,4 +1,5 @@
 ﻿
+using Silk.NET.Input;
 using Silk.NET.Maths;
 
 namespace Szeminarium
@@ -15,6 +16,10 @@ namespace Szeminarium
 
         const double AngleChangeStepSize = Math.PI / 180 * 5;
 
+        const float MovingSpeed = 0.5f;
+
+        private Vector3D<float> CameraPosition = new(0, 0, -5);
+
         /// <summary>
         /// Gets the position of the camera.
         /// </summary>
@@ -22,7 +27,8 @@ namespace Szeminarium
         {
             get
             {
-                return GetPointFromAngles(DistanceToOrigin, AngleToZYPlane, AngleToZXPlane);
+                return CameraPosition;
+                    //GetPointFromAngles(DistanceToOrigin, AngleToZYPlane, AngleToZXPlane);
             }
         }
 
@@ -34,6 +40,30 @@ namespace Szeminarium
             get
             {
                 return Vector3D.Normalize(GetPointFromAngles(DistanceToOrigin, AngleToZYPlane, AngleToZXPlane + Math.PI / 2));
+            }
+        }
+
+        public Vector3D<float> Forward
+        {
+            get
+            {
+                return Vector3D.Normalize(GetPointFromAngles(1, AngleToZYPlane, AngleToZXPlane));
+            }
+        }
+
+        public Vector3D<float> ForwardMovement
+        {
+            get
+            {
+                return Vector3D.Normalize(GetPointFromAngles(1, AngleToZYPlane, 0));
+            }
+        }
+
+        public Vector3D<float> Right
+        {
+            get
+            {
+                return Vector3D.Normalize(Vector3D.Cross(Forward, UpVector));
             }
         }
 
@@ -49,7 +79,60 @@ namespace Szeminarium
             }
         }
 
-        public void IncreaseZXAngle()
+
+        public void MoveForward()
+        {
+            CameraPosition += ForwardMovement * MovingSpeed;
+        }
+
+        public void MoveBackward()
+        {
+            CameraPosition -= ForwardMovement * MovingSpeed;
+        }
+
+        public void MoveLeft()
+        {
+            CameraPosition -= Right * MovingSpeed;
+        }
+
+        public void MoveRight()
+        {
+            CameraPosition += Right * MovingSpeed;
+        }
+
+        public void MoveUp()
+        {
+            CameraPosition += Vector3D<float>.UnitY * MovingSpeed;
+        }
+
+        public void MoveDown()
+        {
+            CameraPosition -= Vector3D<float>.UnitY * MovingSpeed;
+        }
+
+        public void RotateLeft()
+        {
+            AngleToZYPlane += AngleChangeStepSize;
+        }
+
+        public void RotateRight()
+        {
+            AngleToZYPlane -= AngleChangeStepSize;
+        }
+
+        public void RotateUp()
+        {
+            AngleToZXPlane += AngleChangeStepSize;
+        }
+
+        public void RotateDown()
+        {
+            AngleToZXPlane -= AngleChangeStepSize;
+        }
+
+
+
+        /*public void IncreaseZXAngle()
         {
             AngleToZXPlane += AngleChangeStepSize;
         }
@@ -68,7 +151,7 @@ namespace Szeminarium
         public void DecreaseZYAngle()
         {
             AngleToZYPlane -= AngleChangeStepSize;
-        }
+        }*/
 
         public void IncreaseDistance()
         {
@@ -80,11 +163,11 @@ namespace Szeminarium
             DistanceToOrigin = DistanceToOrigin / DistanceScaleFactor;
         }
 
-        private static Vector3D<float> GetPointFromAngles(double distanceToOrigin, double angleToMinZYPlane, double angleToMinZXPlane)
+        private static Vector3D<float> GetPointFromAngles(double distance, double yaw, double pitch)
         {
-            var x = distanceToOrigin * Math.Cos(angleToMinZXPlane) * Math.Sin(angleToMinZYPlane);
-            var z = distanceToOrigin * Math.Cos(angleToMinZXPlane) * Math.Cos(angleToMinZYPlane);
-            var y = distanceToOrigin * Math.Sin(angleToMinZXPlane);
+            var x = distance * Math.Cos(pitch) * Math.Sin(yaw);
+            var z = distance * Math.Cos(pitch) * Math.Cos(yaw);
+            var y = distance * Math.Sin(pitch);
 
             return new Vector3D<float>((float)x, (float)y, (float)z);
         }
