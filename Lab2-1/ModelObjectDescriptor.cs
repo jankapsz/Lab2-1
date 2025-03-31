@@ -21,6 +21,8 @@ namespace GrafikaSzeminarium
 
         private GL Gl;
 
+
+
         public unsafe static ModelObjectDescriptor CreateCube(GL Gl)
         {
             uint vao = Gl.GenVertexArray();

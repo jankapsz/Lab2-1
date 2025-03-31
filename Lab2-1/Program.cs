@@ -115,6 +115,8 @@ namespace GrafikaSzeminarium
             new float[] {0.0f, 0.0f, -1.1f},
         };
 
+
+
         private static uint program;
 
         static void Main(string[] args)
@@ -201,25 +203,34 @@ namespace GrafikaSzeminarium
             switch (key)
             {
                 case Key.Left:
-                    camera.DecreaseZYAngle();
+                    camera.RotateLeft();
                     break;
                 case Key.Right:
-                    camera.IncreaseZYAngle();
+                    camera.RotateRight();
                     break;
                 case Key.Down:
-                    camera.IncreaseDistance();
+                    camera.RotateDown();
                     break;
                 case Key.Up:
-                    camera.DecreaseDistance();
+                    camera.RotateUp();
                     break;
-                case Key.U:
-                    camera.IncreaseZXAngle();
+                case Key.W:
+                    camera.MoveForward();
+                    break;
+                case Key.A:
+                    camera.MoveLeft();
+                    break;
+                case Key.S:
+                    camera.MoveBackward();
                     break;
                 case Key.D:
-                    camera.DecreaseZXAngle();
+                    camera.MoveRight();
                     break;
                 case Key.Space:
-                    cubeArrangementModel.AnimationEnabled = !cubeArrangementModel.AnimationEnabled;
+                    camera.MoveUp();
+                    break;
+                case Key.ShiftLeft:
+                    camera.MoveDown();
                     break;
             }
         }
