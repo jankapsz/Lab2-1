@@ -22,11 +22,123 @@ namespace GrafikaSzeminarium
         private GL Gl;
 
 
+        private static float[] colors = new float[] {
+                1.0f, 0.0f, 0.0f, 1.0f,
+                1.0f, 0.0f, 0.0f, 1.0f,
+                1.0f, 0.0f, 0.0f, 1.0f,
+                1.0f, 0.0f, 0.0f, 1.0f,
 
-        public unsafe static ModelObjectDescriptor CreateCube(GL Gl)
+                0.0f, 1.0f, 0.0f, 1.0f,
+                0.0f, 1.0f, 0.0f, 1.0f,
+                0.0f, 1.0f, 0.0f, 1.0f,
+                0.0f, 1.0f, 0.0f, 1.0f,
+
+                0.0f, 0.0f, 1.0f, 1.0f,
+                0.0f, 0.0f, 1.0f, 1.0f,
+                0.0f, 0.0f, 1.0f, 1.0f,
+                0.0f, 0.0f, 1.0f, 1.0f,
+
+                1.0f, 0.0f, 1.0f, 1.0f,
+                1.0f, 0.0f, 1.0f, 1.0f,
+                1.0f, 0.0f, 1.0f, 1.0f,
+                1.0f, 0.0f, 1.0f, 1.0f,
+
+                0.0f, 1.0f, 1.0f, 1.0f,
+                0.0f, 1.0f, 1.0f, 1.0f,
+                0.0f, 1.0f, 1.0f, 1.0f,
+                0.0f, 1.0f, 1.0f, 1.0f,
+
+                1.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 1.0f, 0.0f, 1.0f,
+            };
+
+        //maszkok
+        //1-P, 2-R, 3-G, 4-Y, 5-O, 6-B
+        private static float[][] cubeColorMask = new float[][] { 
+            //            1-P,  2-R,  3-G,  4-Y,  5-O,  6-B
+            //0 Purple-Red-Green
+            new float[] { 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f },
+            //1 Purple-Red
+            new float[] { 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+            //2 Purple-Red-Blue
+            new float[] { 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f },
+            //3 Red-Green
+            new float[] { 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f },
+            //4 Red
+            new float[] { 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+            //5 Red-Blue
+            new float[] { 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f },
+            //6 Red-Green-Yellow
+            new float[] { 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f },
+            //7 Red-Yellow
+            new float[] { 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+            //8 Red-Blue-Yellow
+            new float[] { 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f },
+            //9 Green-Purple
+            new float[] { 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f },
+            //10 Purple
+            new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+            //11 Purple-Blue
+            new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f },
+            //12 Blue
+            new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f },
+            //13 Blue-Yellow
+            new float[] { 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f },
+            //14 Yellow
+            new float[] { 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+            //15 Yellow-Green
+            new float[] { 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f },
+            //16 Green 
+            new float[] { 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f },
+            //17 Purple-Green-Orange
+            new float[] { 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f },
+            //18 Purple-Orange
+            new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f },
+            //19 Purple-Blue-Orange
+            new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f },
+            //20 Blue-Orange
+            new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f },
+            //21 Blue-Yellow-Orange
+            new float[] { 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f },
+            //22 Yellow-Orange
+            new float[] { 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f },
+            //23 Yellow-Green-Orange
+            new float[] { 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f },
+            //24 Green-Orange
+            new float[] { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f },
+            //25 Orange
+            new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f },
+            //26 Black
+            new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f },
+            //27 Colorfull
+            new float[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f },
+
+        };
+
+
+        private static float[] maskedColors(int cubeID)
+        {
+            float[] maskcolors = (float[])colors.Clone();
+            int colorIndex;
+            for (int i = 0; i < 6; i++)
+            {
+                colorIndex = i * 16;
+                for(int j=0; j<16; j++)
+                {
+                    maskcolors[colorIndex + j] *= cubeColorMask[cubeID][i];
+                }
+            }
+            return maskcolors;
+        }
+
+        public unsafe static ModelObjectDescriptor CreateCube(GL Gl, int cubeID)
         {
             uint vao = Gl.GenVertexArray();
             Gl.BindVertexArray(vao);
+
+            float[] colorArray = maskedColors(cubeID);
 
             // counter clockwise is front facing
             var vertexArray = new float[] {
@@ -62,37 +174,7 @@ namespace GrafikaSzeminarium
 
             };
 
-            float[] colorArray = new float[] {
-                1.0f, 0.0f, 0.0f, 1.0f,
-                1.0f, 0.0f, 0.0f, 1.0f,
-                1.0f, 0.0f, 0.0f, 1.0f,
-                1.0f, 0.0f, 0.0f, 1.0f,
-
-                0.0f, 1.0f, 0.0f, 1.0f,
-                0.0f, 1.0f, 0.0f, 1.0f,
-                0.0f, 1.0f, 0.0f, 1.0f,
-                0.0f, 1.0f, 0.0f, 1.0f,
-
-                0.0f, 0.0f, 1.0f, 1.0f,
-                0.0f, 0.0f, 1.0f, 1.0f,
-                0.0f, 0.0f, 1.0f, 1.0f,
-                0.0f, 0.0f, 1.0f, 1.0f,
-
-                1.0f, 0.0f, 1.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 1.0f,
-
-                0.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 1.0f, 1.0f, 1.0f,
-                0.0f, 1.0f, 1.0f, 1.0f,
-
-                1.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 1.0f, 0.0f, 1.0f,
-            };
+           
 
             uint[] indexArray = new uint[] {
                 0, 1, 2,

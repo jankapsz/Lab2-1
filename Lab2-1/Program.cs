@@ -152,11 +152,11 @@ namespace GrafikaSzeminarium
             }
 
  ///////////////////////////////////////////////////////////////////////////////////
-            cube = ModelObjectDescriptor.CreateCube(Gl);
+            cube = ModelObjectDescriptor.CreateCube(Gl, 26);
 
             for (int i = 0; i < 26; i++)
             {
-                cubes[i] = ModelObjectDescriptor.CreateCube(Gl);
+                cubes[i] = ModelObjectDescriptor.CreateCube(Gl, i);
             }
 
             Gl.ClearColor(System.Drawing.Color.White);
@@ -262,9 +262,7 @@ namespace GrafikaSzeminarium
             SetMatrix(projectionMatrix, ProjectionMatrixVariableName);
 
 
-            //var modelMatrixCenterCube = Matrix4X4.CreateScale((float)cubeArrangementModel.CenterCubeScale);
-            //SetMatrix(modelMatrixCenterCube, ModelMatrixVariableName);
-            //DrawModelObject(cube);
+            DrawModelObject(cube);
 
             // little cubes drawing
             for(int i=0; i<26; i++)
