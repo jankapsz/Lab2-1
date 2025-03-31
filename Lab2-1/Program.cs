@@ -13,6 +13,7 @@ namespace GrafikaSzeminarium
         private static GL Gl;
 
         private static ModelObjectDescriptor cube;
+        private static ModelObjectDescriptor[] cubes = new ModelObjectDescriptor[27];
 
         private static CameraDescriptor camera = new CameraDescriptor();
 
@@ -52,6 +53,67 @@ namespace GrafikaSzeminarium
             FragColor = outCol;
         }
         ";
+
+        private static float[][] coords = new float[][]
+        {
+            // ELULSO LAP
+            // 0 - bal felso elol
+            new float[] {-1.1f, 1.1f, 1.1f},
+            // 1 - kozepso felso elol
+            new float[] {0.0f, 1.1f, 1.1f},
+            // 2 - jobb felso elol
+            new float[] {1.1f, 1.1f, 1.1f},
+            // 3 - bal kozepso elol
+            new float[] {-1.1f, 0.0f, 1.1f},
+            // 4 - kozepso kozepso elol
+            new float[] {0.0f, 0.0f, 1.1f},
+            // 5 - jobb kozepso elol
+            new float[] {1.1f, 0.0f, 1.1f},
+            // 6 - bal also elol
+            new float[] {-1.1f, -1.1f, 1.1f},
+            // 7 - kozepso also elol
+            new float[] {0.0f, -1.1f, 1.1f},
+            // 8 - jobb also elol
+            new float[] {1.1f, -1.1f, 1.1f},
+
+            // KOZEPSO LAP
+            // 9 - bal felso kozepen
+            new float[] {-1.1f, 1.1f, 0.0f},
+            // 10 - kozepso felso kozepen
+            new float[] {0.0f, 1.1f, 0.0f},
+            // 11 - jobb felso kozepen
+            new float[] {1.1f, 1.1f, 0.0f},
+            // 12 - jobb kozepso kozepen
+            new float[] {1.1f, 0.0f, 0.0f},
+            // 13 - jobb also kozepen
+            new float[] {1.1f, -1.1f, 0.0f},
+            // 14 - kozepso also kozepen
+            new float[] {0.0f, -1.1f, 0.0f},
+            // 15 - bal also kozepen
+            new float[] {-1.1f, -1.1f, 0.0f},
+            // 16 - bal kozepso kozepen
+            new float[] {-1.1f, 0.0f, 0.0f},
+
+            // HATSO LAP
+            // 17 - bal felso hatul
+            new float[] {-1.1f, 1.1f, -1.1f},
+            // 18 - kozepso felso hatul
+            new float[] {0.0f, 1.1f, -1.1f},
+            // 19 - jobb felso hatul
+            new float[] {1.1f, 1.1f, -1.1f},
+            // 20 - jobb kozepso hatul
+            new float[] {1.1f, 0.0f, -1.1f},
+            // 21 - jobb also hatul
+            new float[] {1.1f, -1.1f, -1.1f},
+            // 22 - kozepso also hatul
+            new float[] {0.0f, -1.1f, -1.1f},
+            // 23 - bal also hatul
+            new float[] {-1.1f, -1.1f, -1.1f},
+            // 24 - bal kozepso hatul
+            new float[] {-1.1f, 0.0f, -1.1f},
+            // 25 - kozepso kozepso hatul
+            new float[] {0.0f, 0.0f, -1.1f},
+        };
 
         private static uint program;
 
